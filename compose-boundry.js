@@ -9,29 +9,57 @@ class ComposeBoundary {
 		return inRange;
 	}
 
-	getStatus(list, value) {
-		let status = {};
-		for (let i = 0; i < list.length; i++) {
-			if (this.range(list[i].range[0], list[i].range[1], value)) {
-				status = {
-					name: list[i].name,
-					threshold: list[i].range[1],
-				};
-			}
-			if (value <= list[0].range[0]) {
-				status = {
-					name: list[0].name,
-					threshold: value,
-				};
-			}
-			if (value >= list[list.length - 1].range[1]) {
-				status = {
-					name: list[list.length - 1].name,
-					threshold: value,
-				};
-			}
-			return status;
+	checkValueIsLessThanMinimum(value, listData) {
+		if (value <= listData.range[0]) {
+			return {
+				name: listData.name,
+				threshold: value,
+			};
 		}
+	}
+
+	checkValueIsMoreThanMaximum(value, listData) {
+		if (value >= listData.range[1]) {
+			return {
+				name: listData.name,
+				threshold: value,
+			};
+		}
+	}
+
+	inBetweenMinAndMax(value, listData) {
+		for (let i = 0; i < listData.length; i++) {
+			if (this.range(listData[i].range[0], listData[i].range[1], value)) {
+				return {
+					name: listData.name,
+					threshold: listData.range[1],
+				};
+			}
+		}
+	}
+
+	getStatus(list, value) {
+		let rangeType = {
+			inBetween: function () {
+				let data = this.inBetweenMinAndMax(value, list);
+				return data;
+			},
+			minStatus: function () {
+				let data = this.checkValueIsLessThanMinimum(value, list[0]);
+				return data;
+			},
+			maxStatus: function () {
+				let data = this.checkValueIsMoreThanMaximum(
+					value,
+					list[list.length - 1]
+				);
+				return data;
+			},
+		};
+
+		return (
+			rangeType['inBetween'] || rangeType['minStatus'] || rangeType['maxStatus']
+		);
 	}
 }
 

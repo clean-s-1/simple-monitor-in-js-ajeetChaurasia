@@ -29,7 +29,7 @@ class BatteryStatus {
 				}
 			},
 		};
-		return warnings['min']() || warnings['max']();
+		return warnings.min() || warnings.max();
 	}
 
 	checkMinValue(minValue, value) {

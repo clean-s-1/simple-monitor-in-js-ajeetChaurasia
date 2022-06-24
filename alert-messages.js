@@ -1,12 +1,22 @@
+const translator = require('@vitalets/google-translate-api');
+
 class AlertMessage {
 	constructor() {}
 
+	translateMessage(message) {
+		translator(message, {
+			to: languageCode,
+		}).then((res) => console.log(res.text));
+	}
+
 	rangeMessage(parameter) {
-		console.log(`${parameter} is out of range!`);
+		let message = `${parameter} is out of range!`;
+		this.translateMessage(message);
 	}
 
 	warningMessage(warningMessage, statusMessage) {
-		console.log(`${warningMessage} Warning: Approaching ${statusMessage}`);
+		let message = `${warningMessage} Warning: Approaching ${statusMessage}`;
+		this.translateMessage(message);
 	}
 }
 

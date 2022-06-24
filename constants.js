@@ -69,4 +69,12 @@ const RangeValues = {
 	tolerence: 5,
 };
 
-module.exports = { SocRange, RangeValues, ChargeRange, TemperatureRange };
+const globalLanguage = 'en';
+
+module.exports = {
+	SocRange,
+	RangeValues,
+	ChargeRange,
+	TemperatureRange,
+	globalLanguage,
+};

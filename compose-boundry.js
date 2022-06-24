@@ -5,14 +5,8 @@ class ComposeBoundary {
 	}
 
 	range(min, max, value) {
-		let inRange = this.checkRange(min, max, value);
+		let inRange = value >= min && value <= max;
 		return inRange;
-	}
-
-	checkRange(min, max, value) {
-		if (value >= min && value <= max) {
-			return true;
-		}
 	}
 
 	getStatus(list, value) {
